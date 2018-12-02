@@ -1,3 +1,4 @@
-User.destroy_all
+# frozen_string_literal: true
 
-users = User.create(email: "ester@kais.com")
+User.destroy_all
+User.create(email: "ester@kais.com")
