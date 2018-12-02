@@ -1,5 +1,7 @@
-example_id                          | status | run_time        |
------------------------------------ | ------ | --------------- |
-./spec/models/user_spec.rb[1:1:1:1] | passed | 0.00609 seconds |
-./spec/models/user_spec.rb[1:1:2:1] | passed | 0.0144 seconds  |
-./spec/models/user_spec.rb[1:2]     | passed | 0.09746 seconds |
+example_id                                          | status | run_time        |
+--------------------------------------------------- | ------ | --------------- |
+./spec/controllers/status_controller_spec.rb[1:1:1] | passed | 0.0024 seconds  |
+./spec/controllers/status_controller_spec.rb[1:1:2] | passed | 0.00696 seconds |
+./spec/models/user_spec.rb[1:1:1:1]                 | passed | 0.04168 seconds |
+./spec/models/user_spec.rb[1:1:2:1]                 | passed | 0.05 seconds    |
+./spec/models/user_spec.rb[1:2]                     | passed | 0.1354 seconds  |
