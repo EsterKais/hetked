@@ -21,3 +21,6 @@ Style/StringLiteralsInInterpolation:
 
 Style/Documentation:
   Enabled: false
+
+Style/ExpandPathArguments:
+  Enabled: false
