@@ -17,8 +17,19 @@ group :development, :test do
   gem "faker"
   gem "pry"
   gem "rspec-rails"
+end
+
+group :test do
+  gem "database_cleaner"
+  gem "shoulda-matchers"
+  gem "simplecov"
+end
+
+group :development do
+  gem "brakeman", require: false
+  gem "bundler-audit", require: false
   gem "rubocop", require: false
-  gem "rubocop-rspec"
+  gem "rubocop-rspec", require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
