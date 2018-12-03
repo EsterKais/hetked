@@ -1,4 +1,11 @@
 # frozen_string_literal: true
 
 User.destroy_all
-User.create(email: "ester@kais.com")
+
+Profile.create(
+  firstname: "Ester",
+  lastname: "Kais",
+  username: "deLuna",
+  birthday: Date.today,
+  user: User.create(email: "ester@kais.com")
+)
