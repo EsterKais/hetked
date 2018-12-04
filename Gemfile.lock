@@ -67,6 +67,7 @@ GEM
       i18n (>= 0.7)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
+    graphql (1.7.4)
     i18n (1.1.1)
       concurrent-ruby (~> 1.0)
     jaro_winkler (1.5.1)
@@ -187,6 +188,7 @@ DEPENDENCIES
   database_cleaner
   factory_bot_rails
   faker
+  graphql (= 1.7.4)
   mysql2 (>= 0.4.4, < 0.6.0)
   pry
   puma (~> 3.11)
