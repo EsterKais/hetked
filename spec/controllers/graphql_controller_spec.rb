@@ -8,37 +8,74 @@ RSpec.describe GraphqlController, type: :controller do
   end
 
   describe "users" do
-    let!(:user) { create(:user) }
+    context "when returning all" do
+      let!(:user) { create(:user) }
 
-    let(:query) do
-      "{\nusers{\nid\nemail\n}\n}"
-    end
+      let(:query) do
+        "{\nusers{\nid\nemail\n}\n}"
+      end
 
-    let(:expected_response) do
-      {
-        data:
+      let(:expected_response) do
         {
-          users:
-          [
-            {
-              email: user.email,
-              id: user.id
-            }
-          ]
+          data:
+          {
+            users:
+            [
+              {
+                email: user.email,
+                id: user.id
+              }
+            ]
+          }
         }
-      }
+      end
+
+      before do
+        post :execute, params: { query: query }
+      end
+
+      it "returns status 200" do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it "returns 'ok'" do
+        expect(parsed_response_body).to eq(expected_response)
+      end
     end
 
-    before do
-      post :execute, params: { query: query }
-    end
+    context "with filtering" do
+      let!(:user) { create(:user, email: "someone@email.com") }
 
-    it "returns status 200" do
-      expect(response).to have_http_status(:ok)
-    end
+      let(:query) do
+        "{\nusers(filter:{email:\"some\"}){\nid\nemail\n}\n}\n"
+      end
 
-    it "returns 'ok'" do
-      expect(parsed_response_body).to eq(expected_response)
+      let(:expected_response) do
+        {
+          data:
+          {
+            users:
+            [
+              {
+                email: user.email,
+                id: user.id
+              }
+            ]
+          }
+        }
+      end
+
+      before do
+        post :execute, params: { query: query }
+      end
+
+      it "returns status 200" do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it "returns 'ok'" do
+        expect(parsed_response_body).to eq(expected_response)
+      end
     end
   end
 end
