@@ -9,7 +9,13 @@ RSpec.describe GraphqlController, type: :controller do
     JSON.parse(response.body).deep_symbolize_keys
   end
 
+  before do
+    post :execute, params: { query: query }
+  end
+
   describe "users" do
+    let(:email) { "someone@email.com" }
+
     context "when returning all" do
       let!(:user) { create(:user) }
 
@@ -32,10 +38,6 @@ RSpec.describe GraphqlController, type: :controller do
         }
       end
 
-      before do
-        post :execute, params: { query: query }
-      end
-
       it "returns status 200" do
         expect(response).to have_http_status(:ok)
       end
@@ -45,8 +47,8 @@ RSpec.describe GraphqlController, type: :controller do
       end
     end
 
-    context "with filtering" do
-      let!(:user) { create(:user, email: "someone@email.com") }
+    context "when filtering" do
+      let!(:user) { create(:user, email: email) }
 
       let(:query) do
         "{\nusers(filter:{email:\"some\"}){\nid\nemail\n}\n}\n"
@@ -67,16 +69,32 @@ RSpec.describe GraphqlController, type: :controller do
         }
       end
 
-      before do
-        post :execute, params: { query: query }
-      end
-
       it "returns status 200" do
         expect(response).to have_http_status(:ok)
       end
 
       it "returns 'ok'" do
         expect(parsed_response_body).to eq(expected_response)
+      end
+    end
+
+    context "when creating" do
+      let(:query) do
+        "mutation {\ncreateUser(\nemail:\"#{email}\"\n){\nid\nemail\n}\n}"
+      end
+
+      it "returns status 200" do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it "returns the anticipated body" do
+        expect(
+          parsed_response_body.dig(:data, :createUser, :email)
+        ).to eq(email)
+      end
+
+      it "creates a new user" do
+        expect(User.where(email: email).count).to eq(1)
       end
     end
   end

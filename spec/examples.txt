@@ -1,17 +1,26 @@
-example_id                                             | status | run_time        |
------------------------------------------------------- | ------ | --------------- |
-./spec/controllers/graphql_controller_spec.rb[1:1:1:1] | passed | 0.13994 seconds |
-./spec/controllers/graphql_controller_spec.rb[1:1:1:2] | passed | 0.05021 seconds |
-./spec/controllers/graphql_controller_spec.rb[1:1:2:1] | passed | 0.01 seconds    |
-./spec/controllers/graphql_controller_spec.rb[1:1:2:2] | passed | 0.00737 seconds |
-./spec/controllers/status_controller_spec.rb[1:1:1]    | passed | 0.0028 seconds  |
-./spec/controllers/status_controller_spec.rb[1:1:2]    | passed | 0.00624 seconds |
-./spec/models/profile_spec.rb[1:1:1:1]                 | passed | 0.01856 seconds |
-./spec/models/profile_spec.rb[1:1:2:1]                 | passed | 0.01138 seconds |
-./spec/models/profile_spec.rb[1:2]                     | passed | 0.09646 seconds |
-./spec/models/profile_spec.rb[1:3]                     | passed | 0.02882 seconds |
-./spec/models/user_spec.rb[1:1:1:1]                    | passed | 0.00514 seconds |
-./spec/models/user_spec.rb[1:1:2:1]                    | passed | 0.01038 seconds |
-./spec/models/user_spec.rb[1:2]                        | passed | 0.00219 seconds |
-./spec/models/user_spec.rb[1:3]                        | passed | 0.00141 seconds |
-./spec/models/user_spec.rb[1:4:1]                      | passed | 0.01708 seconds |
+example_id                                                | status | run_time        |
+--------------------------------------------------------- | ------ | --------------- |
+./spec/controllers/graphql_controller_spec.rb[1:1:1:1]    | passed | 0.00751 seconds |
+./spec/controllers/graphql_controller_spec.rb[1:1:1:2]    | passed | 0.00889 seconds |
+./spec/controllers/graphql_controller_spec.rb[1:1:2:1]    | passed | 0.0107 seconds  |
+./spec/controllers/graphql_controller_spec.rb[1:1:2:2]    | passed | 0.06328 seconds |
+./spec/controllers/graphql_controller_spec.rb[1:1:3:1]    | passed | 0.00897 seconds |
+./spec/controllers/graphql_controller_spec.rb[1:1:3:2]    | passed | 0.0093 seconds  |
+./spec/controllers/graphql_controller_spec.rb[1:1:3:3]    | passed | 0.01156 seconds |
+./spec/controllers/status_controller_spec.rb[1:1:1]       | passed | 0.00411 seconds |
+./spec/controllers/status_controller_spec.rb[1:1:2]       | passed | 0.00289 seconds |
+./spec/models/profile_spec.rb[1:1:1:1]                    | passed | 0.00737 seconds |
+./spec/models/profile_spec.rb[1:1:2:1]                    | passed | 0.00911 seconds |
+./spec/models/profile_spec.rb[1:2]                        | passed | 0.003 seconds   |
+./spec/models/profile_spec.rb[1:3]                        | passed | 0.00257 seconds |
+./spec/models/user_spec.rb[1:1:1:1]                       | passed | 0.049 seconds   |
+./spec/models/user_spec.rb[1:1:2:1]                       | passed | 0.04581 seconds |
+./spec/models/user_spec.rb[1:2]                           | passed | 0.13891 seconds |
+./spec/models/user_spec.rb[1:3]                           | passed | 0.00858 seconds |
+./spec/models/user_spec.rb[1:4:1]                         | passed | 0.06274 seconds |
+./spec/requests/application_controller_spec.rb[1:1:1:1:1] | passed | 0.00268 seconds |
+./spec/requests/application_controller_spec.rb[1:1:1:1:2] | passed | 0.00318 seconds |
+./spec/requests/application_controller_spec.rb[1:1:1:2:1] | passed | 0.00277 seconds |
+./spec/requests/application_controller_spec.rb[1:1:1:2:2] | passed | 0.00261 seconds |
+./spec/requests/application_controller_spec.rb[1:1:2:1]   | passed | 0.00268 seconds |
+./spec/requests/application_controller_spec.rb[1:1:2:2]   | passed | 0.07082 seconds |
