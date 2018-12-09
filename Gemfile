@@ -7,6 +7,7 @@ ruby "2.5.0"
 
 gem "bootsnap", ">= 1.1.0", require: false
 gem "graphql", "1.7.4"
+gem "jwt"
 gem "mysql2", ">= 0.4.4", "< 0.6.0"
 gem "puma", "~> 3.11"
 gem "rack-cors"

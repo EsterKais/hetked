@@ -72,6 +72,7 @@ GEM
       concurrent-ruby (~> 1.0)
     jaro_winkler (1.5.1)
     json (2.1.0)
+    jwt (2.1.0)
     loofah (2.2.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -193,6 +194,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   graphql (= 1.7.4)
+  jwt
   mysql2 (>= 0.4.4, < 0.6.0)
   pry
   puma (~> 3.11)

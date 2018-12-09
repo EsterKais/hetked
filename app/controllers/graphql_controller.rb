@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class GraphqlController < ApplicationController
+  before_action :authenticate_user!
+
   # rubocop:disable Metrics/MethodLength
   def execute
     variables = ensure_hash(params[:variables])

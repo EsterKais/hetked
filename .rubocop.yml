@@ -28,3 +28,6 @@ Style/ExpandPathArguments:
 Metrics/BlockLength:
   Exclude:
     - 'spec/*/*'
+
+RSpec/NestedGroups:
+  Enabled: false

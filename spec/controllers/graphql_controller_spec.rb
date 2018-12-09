@@ -3,6 +3,8 @@
 require "rails_helper"
 
 RSpec.describe GraphqlController, type: :controller do
+  include_context "with authentication"
+
   subject(:parsed_response_body) do
     JSON.parse(response.body).deep_symbolize_keys
   end
