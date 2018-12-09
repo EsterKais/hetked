@@ -24,3 +24,7 @@ Style/Documentation:
 
 Style/ExpandPathArguments:
   Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/*/*'
