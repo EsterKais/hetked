@@ -97,5 +97,25 @@ RSpec.describe GraphqlController, type: :controller do
         expect(User.where(email: email).count).to eq(1)
       end
     end
+
+    context "when updating" do
+      let(:query) do
+        "mutation {\nupdateUser(email: \"someone@email.com\") {\nemail\n}\n}\n"
+      end
+
+      it "returns status 200" do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it "returns the anticipated body" do
+        expect(
+          parsed_response_body.dig(:data, :updateUser, :email)
+        ).to eq(email)
+      end
+
+      it "updates the logged in user" do
+        expect(User.where(email: email).count).to eq(1)
+      end
+    end
   end
 end
