@@ -22,9 +22,7 @@ class ApplicationController < ActionController::API
   def current_user
     return unless decoded_token
 
-    @current_user ||= User.find_by(
-      email: decoded_token.first["email"]
-    )
+    @current_user ||= User.find(decoded_token.first["id"])
   end
 
   def render_unauthorized
