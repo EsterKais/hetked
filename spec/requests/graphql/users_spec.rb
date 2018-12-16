@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Graphql: Users" do
+RSpec.describe "Graphql: Users", type: :request do
   include_context "with authentication"
 
   subject(:parsed_response_body) do
@@ -12,7 +12,7 @@ RSpec.describe "Graphql: Users" do
   let(:email) { "someone@email.com" }
 
   before do
-    post :execute, params: { query: query }
+    post "/graphql", params: { query: query }, headers: headers
   end
 
   context "when returning all" do

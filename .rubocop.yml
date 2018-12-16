@@ -27,7 +27,7 @@ Style/ExpandPathArguments:
 
 Metrics/BlockLength:
   Exclude:
-    - 'spec/*/*/*'
+    - 'spec/**/*'
 
 RSpec/NestedGroups:
   Enabled: false

@@ -7,6 +7,4 @@ RSpec.shared_context "with authentication" do
   let(:payload) { { id: user.id } }
   let(:jwt_token) { JWT.encode(payload, nil, "none") }
   let(:headers) { { authentication: jwt_token } }
-
-  before { request.headers.merge! headers }
 end
