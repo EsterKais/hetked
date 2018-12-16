@@ -1,12 +1,8 @@
 # frozen_string_literal: true
 
-require "search_object/plugin/graphql"
-
 module Resolvers
   module Users
-    class Search
-      include SearchObject.module(:graphql)
-
+    class Search < Resolvers::SearchBase
       FILTERABLE_ATTRIBUTES = %w[email].freeze
 
       scope { User.all }
