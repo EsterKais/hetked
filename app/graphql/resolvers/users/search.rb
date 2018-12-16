@@ -7,6 +7,8 @@ module Resolvers
     class Search
       include SearchObject.module(:graphql)
 
+      FILTERABLE_ATTRIBUTES = %w[email].freeze
+
       scope { User.all }
 
       type !types[Types::UserType]
@@ -20,7 +22,11 @@ module Resolvers
       private
 
       def apply_filter(scope, value)
-        Resolvers::Users::Filter.new.apply(scope, value)
+        Resolvers::Users::Filter.new.apply(
+          scope,
+          value,
+          FILTERABLE_ATTRIBUTES
+        )
       end
     end
   end
