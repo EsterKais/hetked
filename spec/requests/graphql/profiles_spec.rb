@@ -9,7 +9,7 @@ RSpec.describe "Graphql: Profiles", type: :request do
     JSON.parse(response.body).deep_symbolize_keys
   end
 
-  let!(:profile) { create(:profile, user: user) }
+  let!(:profile) { create(:profile, user: current_user) }
 
   before do
     post "/graphql", params: { query: query }, headers: headers
@@ -137,7 +137,7 @@ RSpec.describe "Graphql: Profiles", type: :request do
     it "creates the profile for the logged in user" do
       expect(
         parsed_response_body.dig(:data, :createProfile, :user, :email)
-      ).to eq(user.email)
+      ).to eq(current_user.email)
     end
 
     it "creates a new user" do
@@ -176,7 +176,7 @@ RSpec.describe "Graphql: Profiles", type: :request do
     it "updates the logged in users' profile" do
       expect(
         parsed_response_body.dig(:data, :updateProfile, :user, :email)
-      ).to eq(user.email)
+      ).to eq(current_user.email)
     end
   end
 end
