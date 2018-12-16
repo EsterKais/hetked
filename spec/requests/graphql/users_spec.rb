@@ -16,8 +16,6 @@ RSpec.describe "Graphql: Users", type: :request do
   end
 
   context "when returning all" do
-    let!(:user) { create(:user) }
-
     let(:query) do
       "{\nusers{\nid\nemail\n}\n}"
     end
@@ -41,7 +39,7 @@ RSpec.describe "Graphql: Users", type: :request do
       expect(response).to have_http_status(:ok)
     end
 
-    it "returns 'ok'" do
+    it "returns the expected response" do
       expect(parsed_response_body).to eq(expected_response)
     end
   end
@@ -72,7 +70,7 @@ RSpec.describe "Graphql: Users", type: :request do
       expect(response).to have_http_status(:ok)
     end
 
-    it "returns 'ok'" do
+    it "returns the expected response" do
       expect(parsed_response_body).to eq(expected_response)
     end
   end
@@ -106,7 +104,7 @@ RSpec.describe "Graphql: Users", type: :request do
       expect(response).to have_http_status(:ok)
     end
 
-    it "returns the anticipated body" do
+    it "returns the expected body" do
       expect(
         parsed_response_body.dig(:data, :updateUser, :email)
       ).to eq(email)
