@@ -7,9 +7,11 @@ module Resolvers
 
       type Types::UserType
 
-      def call(_obj, args, _ctx)
-        user = User.find(args[:id])
+      def call(_obj, args, ctx)
+        user = User.find(ctx[:current_user].id)
         user.update(email: args[:email])
+
+        user
       end
     end
   end
