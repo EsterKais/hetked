@@ -9,7 +9,7 @@ RSpec.describe "Graphql: Profiles", type: :request do
     JSON.parse(response.body).deep_symbolize_keys
   end
 
-  let!(:profile) { create(:profile) }
+  let!(:profile) { create(:profile, user: user) }
 
   before do
     post "/graphql", params: { query: query }, headers: headers
@@ -17,7 +17,18 @@ RSpec.describe "Graphql: Profiles", type: :request do
 
   context "when returning all" do
     let(:query) do
-      "{\n\tprofiles {\nfirstname\nlastname\nusername\nuser {\nemail\n}\n}\n}"
+      <<~HEREDOC
+        {
+          profiles {
+            firstname
+            lastname
+            username
+            user {
+              email
+            }
+          }
+        }
+      HEREDOC
     end
 
     let(:expected_response) do
@@ -53,7 +64,17 @@ RSpec.describe "Graphql: Profiles", type: :request do
     let(:profile) { create(:profile, firstname: firstname) }
 
     let(:query) do
-      "{\nprofiles(filter:{firstname:\"some\"}){\nfirstname\n}\n}\n"
+      <<~HEREDOC
+        {
+          profiles(
+            filter: {
+              firstname: "some"
+            }
+          ){
+            firstname
+          }
+        }
+      HEREDOC
     end
 
     let(:expected_response) do
@@ -79,43 +100,83 @@ RSpec.describe "Graphql: Profiles", type: :request do
     end
   end
 
-  # context "when creating" do
-  #   let(:query) do
-  #     "mutation {\ncreateUser(\nemail:\"#{email}\"\n){\nid\nemail\n}\n}"
-  #   end
+  context "when creating" do
+    let(:firstname) { Faker::Artist.name }
+    let(:lastname) { Faker::Artist.name }
+    let(:username) { Faker::Artist.name }
 
-  #   it "returns status 200" do
-  #     expect(response).to have_http_status(:ok)
-  #   end
+    let(:query) do
+      <<~HEREDOC
+        mutation {
+          createProfile(
+            firstname: "#{firstname}",
+            lastname: "#{lastname}",
+            username: "#{username}"
+          ){
+            firstname
+            lastname
+            username
+            user {
+              email
+            }
+          }
+        }
+      HEREDOC
+    end
 
-  #   it "returns the anticipated body" do
-  #     expect(
-  #       parsed_response_body.dig(:data, :createUser, :email)
-  #     ).to eq(email)
-  #   end
+    it "returns status 200" do
+      expect(response).to have_http_status(:ok)
+    end
 
-  #   it "creates a new user" do
-  #     expect(User.where(email: email).count).to eq(1)
-  #   end
-  # end
+    it "returns the anticipated body" do
+      expect(
+        parsed_response_body.dig(:data, :createProfile, :firstname)
+      ).to eq(firstname)
+    end
 
-  # context "when updating" do
-  #   let(:query) do
-  #     "mutation {\nupdateUser(email: \"someone@email.com\") {\nemail\n}\n}\n"
-  #   end
+    it "creates the profile for the logged in user" do
+      expect(
+        parsed_response_body.dig(:data, :createProfile, :user, :email)
+      ).to eq(user.email)
+    end
 
-  #   it "returns status 200" do
-  #     expect(response).to have_http_status(:ok)
-  #   end
+    it "creates a new user" do
+      expect(Profile.where(firstname: firstname).count).to eq(1)
+    end
+  end
 
-  #   it "returns the anticipated body" do
-  #     expect(
-  #       parsed_response_body.dig(:data, :updateUser, :email)
-  #     ).to eq(email)
-  #   end
+  context "when updating" do
+    let(:firstname) { Faker::Artist.name }
 
-  #   it "updates the logged in user" do
-  #     expect(User.where(email: email).count).to eq(1)
-  #   end
-  # end
+    let(:query) do
+      <<~HEREDOC
+        mutation {
+          updateProfile(
+            firstname: "#{firstname}"
+          ) {
+            firstname
+            user {
+              email
+            }
+          }
+        }
+      HEREDOC
+    end
+
+    it "returns status 200" do
+      expect(response).to have_http_status(:ok)
+    end
+
+    it "returns the anticipated body" do
+      expect(
+        parsed_response_body.dig(:data, :updateProfile, :firstname)
+      ).to eq(firstname)
+    end
+
+    it "updates the logged in users' profile" do
+      expect(
+        parsed_response_body.dig(:data, :updateProfile, :user, :email)
+      ).to eq(user.email)
+    end
+  end
 end
