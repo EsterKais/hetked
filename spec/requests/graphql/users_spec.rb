@@ -9,7 +9,7 @@ RSpec.describe "Graphql: Users", type: :request do
     JSON.parse(response.body).deep_symbolize_keys
   end
 
-  let(:email) { "someone@email.com" }
+  let(:custom_email) { Faker::Internet.email }
 
   before do
     post "/graphql", params: { query: query }, headers: headers
@@ -17,7 +17,14 @@ RSpec.describe "Graphql: Users", type: :request do
 
   context "when returning all" do
     let(:query) do
-      "{\nusers{\nid\nemail\n}\n}"
+      <<~HEREDOC
+        {
+          users {
+            id
+            email
+          }
+        }
+      HEREDOC
     end
 
     let(:expected_response) do
@@ -27,8 +34,8 @@ RSpec.describe "Graphql: Users", type: :request do
           users:
           [
             {
-              email: user.email,
-              id: user.id
+              email: current_user.email,
+              id: current_user.id
             }
           ]
         }
@@ -45,10 +52,19 @@ RSpec.describe "Graphql: Users", type: :request do
   end
 
   context "when filtering" do
-    let!(:user) { create(:user, email: email) }
+    let!(:user) { create(:user, email: custom_email) }
 
     let(:query) do
-      "{\nusers(filter:{email:\"some\"}){\nid\nemail\n}\n}\n"
+      <<~HEREDOC
+        {
+          users(
+            filter: { email: "#{custom_email.split("@").first}" }
+          ){
+            id
+            email
+          }
+        }
+      HEREDOC
     end
 
     let(:expected_response) do
@@ -58,12 +74,16 @@ RSpec.describe "Graphql: Users", type: :request do
           users:
           [
             {
-              email: user.email,
+              email: custom_email,
               id: user.id
             }
           ]
         }
       }
+    end
+
+    before do
+      post "/graphql", params: { query: query }, headers: headers
     end
 
     it "returns status 200" do
@@ -77,7 +97,15 @@ RSpec.describe "Graphql: Users", type: :request do
 
   context "when creating" do
     let(:query) do
-      "mutation {\ncreateUser(\nemail:\"#{email}\"\n){\nid\nemail\n}\n}"
+      <<~HEREDOC
+        mutation {
+          createUser(
+          email: "#{custom_email}"){
+            id
+            email
+          }
+        }
+      HEREDOC
     end
 
     it "returns status 200" do
@@ -87,17 +115,24 @@ RSpec.describe "Graphql: Users", type: :request do
     it "returns the anticipated body" do
       expect(
         parsed_response_body.dig(:data, :createUser, :email)
-      ).to eq(email)
+      ).to eq(custom_email)
     end
 
     it "creates a new user" do
-      expect(User.where(email: email).count).to eq(1)
+      expect(User.where(email: custom_email).count).to eq(1)
     end
   end
 
   context "when updating" do
     let(:query) do
-      "mutation {\nupdateUser(email: \"someone@email.com\") {\nemail\n}\n}\n"
+      <<~HEREDOC
+        mutation {
+          updateUser(
+          email: "#{custom_email}"){
+            email
+          }
+        }
+      HEREDOC
     end
 
     it "returns status 200" do
@@ -107,11 +142,11 @@ RSpec.describe "Graphql: Users", type: :request do
     it "returns the expected body" do
       expect(
         parsed_response_body.dig(:data, :updateUser, :email)
-      ).to eq(email)
+      ).to eq(custom_email)
     end
 
     it "updates the logged in user" do
-      expect(User.where(email: email).count).to eq(1)
+      expect(User.where(email: custom_email).count).to eq(1)
     end
   end
 end

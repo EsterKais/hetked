@@ -3,8 +3,8 @@
 require "jwt"
 
 RSpec.shared_context "with authentication" do
-  let(:user) { create(:user) }
-  let(:payload) { { id: user.id } }
+  let(:current_user) { create(:user) }
+  let(:payload) { { id: current_user.id } }
   let(:jwt_token) { JWT.encode(payload, nil, "none") }
   let(:headers) { { authentication: jwt_token } }
 end
